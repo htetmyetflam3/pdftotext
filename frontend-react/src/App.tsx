@@ -20,10 +20,13 @@ export default function App() {
   const [grammarOpen, setGrammarOpen] = useState(false);
 
   useEffect(() => {
-    const openPdf = () => setPdfOpen(true);
+    const openPdf = () => {
+      setGrammarOpen(false);
+      setPdfOpen(true);
+    };
     const openGrammar = () => {
+      setPdfOpen(false);
       setGrammarOpen(true);
-      window.scrollTo({ top: 80, behavior: "smooth" });
     };
     window.addEventListener("akkhara:open-pdf", openPdf);
     window.addEventListener("akkhara:open-grammar", openGrammar);
@@ -44,13 +47,7 @@ export default function App() {
         </a>
         <Nav />
         <main>
-          {grammarOpen ? (
-            <div className="pt-24">
-              <GrammarToolSection isOpen={grammarOpen} onClose={() => setGrammarOpen(false)} />
-            </div>
-          ) : (
-            <Hero />
-          )}
+          <Hero />
           <SocialProof />
           <HowItWorks />
           <Compare />
@@ -62,6 +59,7 @@ export default function App() {
         <Footer />
         <StickyCta />
         <PdfDemoOverlay isOpen={pdfOpen} onClose={() => setPdfOpen(false)} />
+        <GrammarToolSection isOpen={grammarOpen} onClose={() => setGrammarOpen(false)} />
       </div>
     </MotionConfig>
   );
