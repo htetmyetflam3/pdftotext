@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+/* ============================================================
+   AKKHARA — unified design tokens
+   One palette used across nav, hero, slides, overlays, sections
+   ============================================================ */
+@theme {
+  --font-sans: "Inter", "Noto Sans Myanmar", ui-sans-serif, system-ui, sans-serif;
+  --font-mm: "Noto Sans Myanmar", "Inter", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-ink: #0a1124;
+  --color-ink-2: #172137;
+  --color-ink-3: #33405c;
+  --color-muted: #667797;
+  --color-line: #e3e9f4;
+  --color-canvas: #f4f7fd;
+
+  --color-brand-50: #eef3ff;
+  --color-brand-100: #dde6ff;
+  --color-brand-200: #bccdff;
+  --color-brand-300: #93aaff;
+  --color-brand-400: #6282ff;
+  --color-brand-500: #2b59ff;
+  --color-brand-600: #1b3fe0;
+  --color-brand-700: #152fae;
+
+  --color-violet-brand: #7c5cff;
+  --color-teal-brand: #00b8a9;
+  --color-amber-brand: #ffb020;
+  --color-rose-brand: #ff5a5f;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.font-mm {
+  font-family: var(--font-mm);
+  line-height: 1.85;
+}
+
+/* ---------- shared surfaces ---------- */
+.ak-card {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(10, 17, 36, 0.04), 0 18px 40px -28px rgba(10, 17, 36, 0.35);
+}
+
+.ak-grad-text {
+  background: linear-gradient(100deg, #2b59ff 0%, #7c5cff 48%, #00b8a9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ak-ring {
+  box-shadow: 0 0 0 1px rgba(43, 89, 255, 0.12), 0 24px 60px -30px rgba(21, 47, 174, 0.55);
+}
+
+.ak-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.ak-scroll::-webkit-scrollbar-thumb {
+  background: #cdd7ea;
+  border-radius: 99px;
+}
+.ak-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============================================================
+   Animations (hero SVG artwork + UI)
+   ============================================================ */
+.svg-fx * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes ak-dash {
+  to {
+    stroke-dashoffset: -66;
+  }
+}
+@keyframes ak-dash-rev {
+  to {
+    stroke-dashoffset: 66;
+  }
+}
+@keyframes ak-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ak-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes ak-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes ak-float-sm {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes ak-line-grow {
+  0% {
+    transform: scaleX(0.05);
+    opacity: 0.15;
+  }
+  35% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  85% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(0.05);
+    opacity: 0.15;
+  }
+}
+@keyframes ak-lens {
+  0% {
+    transform: translate(0, 0);
+  }
+  35% {
+    transform: translate(-88px, -46px);
+  }
+  70% {
+    transform: translate(-96px, -96px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes ak-pop {
+  0%,
+  70%,
+  100% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.16);
+  }
+}
+@keyframes ak-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+@keyframes ak-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes ak-slide-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(14px);
+  }
+}
+@keyframes ak-sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(240%);
+  }
+}
+@keyframes ak-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ak-zoom {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes ak-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ak-bar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.fx-dash {
+  stroke-dasharray: 12 10;
+  animation: ak-dash 1.5s linear infinite;
+}
+.fx-dash-rev {
+  stroke-dasharray: 12 10;
+  animation: ak-dash-rev 1.9s linear infinite;
+}
+.fx-spin {
+  animation: ak-spin 6s linear infinite;
+}
+.fx-spin-fast {
+  animation: ak-spin 2.6s linear infinite;
+}
+.fx-spin-rev {
+  animation: ak-spin-rev 8s linear infinite;
+}
+.fx-float {
+  animation: ak-float 5s ease-in-out infinite;
+}
+.fx-float-sm {
+  animation: ak-float-sm 4s ease-in-out infinite;
+}
+.fx-line {
+  transform-origin: left center;
+  animation: ak-line-grow 3.2s ease-in-out infinite;
+}
+.fx-lens {
+  animation: ak-lens 7s ease-in-out infinite;
+}
+.fx-pop {
+  animation: ak-pop 3s ease-in-out infinite;
+}
+.fx-blink {
+  animation: ak-blink 5.5s ease-in-out infinite;
+}
+.fx-glow {
+  animation: ak-glow 2.4s ease-in-out infinite;
+}
+.fx-slide-x {
+  animation: ak-slide-x 2.8s ease-in-out infinite;
+}
+
+.ak-rise {
+  animation: ak-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.ak-zoom {
+  animation: ak-zoom 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.ak-fade {
+  animation: ak-fade 0.25s ease both;
+}
+.ak-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: ak-bar 1.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-dash,
+  .fx-dash-rev,
+  .fx-spin,
+  .fx-spin-fast,
+  .fx-spin-rev,
+  .fx-float,
+  .fx-float-sm,
+  .fx-line,
+  .fx-lens,
+  .fx-pop,
+  .fx-blink,
+  .fx-glow,
+  .fx-slide-x,
+  .ak-rise,
+  .ak-zoom,
+  .ak-fade {
+    animation: none !important;
+  }
+}
