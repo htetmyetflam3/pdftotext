@@ -1,44 +1,41 @@
 # Project Structure — linga (this branch)
-just development environment for frontend 
 
-This file describes **this branch only**: the frontend SPA, standalone — no backend
+just development environment for frontend
+
+This file describes **this branch only**: two standalone frontend apps, no backend
 code in this tree. Other branches carry their own version. If a line here describes
 work that is not in this tree, it is drift — clean it and update it.
 
-## The SPA (`frontend/`)
-The page is built from `frontend/index.html` by Vite (`frontend/vite.config.js`, paths
-anchored at the repo root: source `frontend/`, output `dist/`, emptied on every build;
-the root `package.json` scripts pass the config explicitly). The JS is built unminified
-and unhashed, split by source:
-`assets/js/main.js` (first-party code), `assets/js/vendor.js` (bootstrap + animejs) and
-`assets/js/character.js` (the lazy raw-SVG string); only CSS stays hashed under
-`assets/CSS/`. The demo's sample files live in `frontend/public/samples/` and the hero
-PNGs in `frontend/public/images/` — both are copied to the `dist/` root on every build.
-It is a single HTML page (no React): a landing slider plus two workspaces, both
-submitting to the one endpoint the site exposes, `POST /api/submit` — the job is told
-apart by metadata, not by a second route.
+The tree holds two React + Vite + Tailwind apps. `frontend-react/` is the landing
+this branch works on; `ui/` is the design source that `frontend-react/` is being
+aligned with (its shell and box numbers are copied over by hand, not imported).
+
+## `frontend-react/` — the landing
+
+Built from `frontend-react/index.html` by Vite (`frontend-react/vite.config.ts`,
+inline single-file output in `dist/`, dev server on `0.0.0.0` with host checking
+off). Nothing here calls a backend: PDF sampling and both demo jobs run in the
+browser.
 
 | File | What it is |
 | --- | --- |
-| `frontend/index.html` | Landing chrome (banner, sticky nav, desktop slider, mobile stacked heroes), **grammar workspace** (`#grammarWorkspace`: the check editor), **PDF demo overlay** (`#pdfDemoOverlay`: sample two-frame + convert card), the check-mode choice dialog, comparison / FAQ / CTA / footer. |
-| `frontend/js/main.js` | Slider, overlay and workspace chrome, plus both jobs. Sample-parses a document in the browser before accepting it (pdf.js / mammoth / TXT head slice) and turns away files with no selectable text; uploads; polls `/api/result` for the check job. Also drives the demo: a sample goes through the real upload gate and its two readings are compared in the overlay. |
-| `frontend/js/character.js` | Injects `frontend/img/character.svg` into a processing stage and animates it with anime.js. Both jobs share it; the artwork is its own build chunk. Shown on upload in the overlay and in the grammar workspace. |
-| `frontend/js/logger.js` | The twin browser/Node logger. |
-| `frontend/img/character.svg` | The writing-character artwork, the single copy the page uses. |
-| `frontend/scss/main.scss`, `frontend/scss/_animations.scss`, `frontend/scss/_landing.scss` | LAYER 1 then LAYER 2 (editor / overlay / character), then the landing chrome. Every `@keyframes` lives in `_animations.scss` except `lpPing`. |
-| `frontend/public/samples/` | The demo's four artifacts: two sliced sample PDFs and the two praser `.txt` results. |
-| `frontend/public/images/` | Hero PNGs (`hero-converter.png`, `hero-grammar.png`) copied as-is. The grammar document board is HTML, not painted into the PNG. |
+| `src/App.tsx` | Page order, and the wiring for the two overlays: `akkhara:open-pdf` / `akkhara:open-grammar` events from the hero and page, opening one closes the other. |
+| `src/components/Hero.tsx` | The hero slider (`#heroSlider`): one track, two slides, arrows, pager, both windows with their callouts. |
+| `src/landing.css` | All landing chrome: nav, slider, sections, footer. The slider box metrics (container `max-w-7xl`, slide grid and padding) follow the `ui` project's Hero. |
+| `src/index.css` | Palette, type, shared surfaces, and the overlay-shell helpers (`.ak-fade`, `.ak-zoom`, `.ak-scroll`). |
+| `src/components/ToolShell.tsx` | The overlay shell taken from `ui/src/components/ToolShell.tsx`, tokens remapped to this palette. Both overlays render through it. |
+| `src/components/PdfDemoOverlay.tsx` | PDF demo overlay: preset samples, simulated parse with confetti, the two result frames, bulk CTA. Its own header bar is gone — the shell supplies the chrome. |
+| `src/components/GrammarToolSection.tsx` | Grammar workspace (same shell): editor + dropzone, detected issues, toasts. Opens as a modal instead of replacing the hero. |
+| `src/components/Sections.tsx`, `Extras.tsx`, `Nav.tsx` | Landing sections, quick converter, sticky CTA, nav. |
+| `src/lib/pdf.ts`, `src/lib/grammar.ts`, `src/data/` | In-browser PDF sampling / Zawgyi mapping / checks, plus the sample texts and presets. |
+| `public/images/` | The hero artworks the slider shows (`hero-converter.png`, `hero-grammar.png`), not edited. |
+| `verify-overlay-and-slider.mjs` | Verification script for the slider box numbers and both overlay shells (needs `jsdom` on `NODE_PATH`, see the file header). |
 
-The demo lives in `#pdfDemoOverlay`. Clicking Test Sample PDF (or a preset pill)
-loads the sliced PDF through the same in-browser sample-parsing gate a dropped
-file gets (pdf.js does the parsing, for real), the file lands in the conversion card,
-and the overlay shows two readings of the same pages: the plain text pdf.js itself
-reads out, and the text after the praser. The praser runs on the server, so that
-pane shows its pre-generated result behind a loading pass — the **character
-animation** (`#convertProcessing`) is what you see while that runs. Download
-buttons cover both sides of the sample: the file (before) and the result (after).
+## `ui/` — the design source
 
-Nothing in this branch runs the backend: the page posts to `POST /api/submit` /
-`POST /api/result`, which live on the site branch, so the SPA is served and checked on
-its own here.
-
+A second app with the same stack, kept as the reference for chrome and metrics
+(`src/components/ToolShell.tsx`, `src/components/Hero.tsx`,
+`src/components/art/*`). It is not built by this branch's workflow and is not
+imported by `frontend-react/`; when a box or shell is taken from it, the code is
+ported and its `ink` / `canvas` / `line` / `brand-*` tokens are remapped onto the
+paper / cinnabar / gold palette above.

@@ -36,11 +36,13 @@ body {
 }
 
 .lp-wrap {
-  width: min(1440px, calc(100% - 2.5rem));
+  width: 100%;
+  max-width: 80rem; /* ui: max-w-7xl */
   margin-inline: auto;
+  padding-inline: 1rem; /* ui: px-4 */
 }
-@media (min-width: 1024px) {
-  .lp-wrap { width: min(1440px, calc(100% - 5rem)); }
+@media (min-width: 640px) {
+  .lp-wrap { padding-inline: 1.5rem; } /* ui: sm:px-6 */
 }
 
 .ak-skip {
@@ -291,10 +293,10 @@ body {
 .lp-hero {
   position: relative;
   overflow: hidden;
-  padding: 5.5rem 0 1.5rem;
+  padding: 5rem 0 0; /* ui: pt-20 */
 }
 @media (min-width: 1024px) {
-  .lp-hero { padding: 7rem 0 3.5rem; }
+  .lp-hero { padding: 6rem 0 0; } /* ui: lg:pt-24 */
 }
 .lp-hero-kicker {
   display: none;
@@ -327,17 +329,17 @@ body {
   flex: 0 0 100%;
   min-width: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+  grid-template-columns: 1fr; /* ui: grid-cols-1 */
+  gap: 2rem; /* ui: gap-8 */
   align-items: center;
-  padding: 0.25rem 2.75rem 0.5rem;
+  /* side gutters are what the existing arrows sit in; vertical numbers are ui's pt-6 pb-6 */
+  padding: 1.5rem 2.75rem;
 }
 @media (min-width: 1024px) {
   .lp-slide {
-    grid-template-columns: 7fr 5fr;
-    gap: 2rem;
-    min-height: 540px;
-    padding: 0.5rem 3.75rem 4.25rem 0.5rem;
+    grid-template-columns: 1.02fr 1.08fr; /* ui: lg:grid-cols-[1.02fr_1.08fr] */
+    gap: 3rem; /* ui: lg:gap-12 */
+    padding: 2.5rem 3.75rem 3rem; /* ui: lg:pt-10 lg:pb-12 */
   }
 }
 
@@ -589,7 +591,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin: 1rem 0 0;
+  margin: 0.5rem 0 2.5rem; /* ui: controls mt-2 pb-10 */
   z-index: 4;
 }
 @media (min-width: 1024px) {

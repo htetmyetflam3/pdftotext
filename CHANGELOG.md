@@ -5,6 +5,37 @@ other branches carry their own. Entries are newest first.
 
 ---
 
+## [2.8.4] - 2026-09-25
+### Changed
+- **Hero slider box sizing now comes from the `ui` project** (its Hero), at every
+  width: container `max-w-7xl` + `px-4` / `sm:px-6` instead of the 1440px frame,
+  section `pt-20` / `lg:pt-24` with nothing after it, slide `gap-8` →
+  `lg:gap-12`, `lg:grid-cols-[1.02fr_1.08fr]` instead of `7fr 5fr`, slide
+  `pt-6 pb-6` → `lg:pt-10 lg:pb-12`, the 540px slide `min-height` dropped, and the
+  in-flow pager row on `mt-2 pb-10`. The slides' inner elements (fake window,
+  hero PNGs, callouts, copy, arrows, pager) are unchanged — the `ui` look is not
+  brought over, only the box metrics.
+- **Both tool overlays now render inside the `ui` overlay shell.** New
+  `frontend-react/src/components/ToolShell.tsx` is `ui/src/components/ToolShell.tsx`
+  with its colour tokens remapped onto this project's paper / cinnabar / gold
+  palette (window chrome with traffic dots + filename + status pill, gradient icon
+  tile header with eyebrow / title / subtitle / badges, scrollable body
+  `max-h-[min(66vh,720px)]`, optional footer, Escape + backdrop close, body scroll
+  lock). `PdfDemoOverlay` and the grammar workspace keep their own inner elements
+  and behaviour (presets, confetti, simulated parse, two result frames, bulk CTA;
+  editor, dropzone, issues list, toast) and only lose their own header bars.
+- `App.tsx`: the grammar workspace is a modal now, not a page that replaces the
+  hero, so the hero stays mounted and opening one tool closes the other.
+
+### Added
+- `frontend-react/verify-overlay-and-slider.mjs` — checks the slider's shipped CSS
+  numbers and drives both overlays in a real DOM (jsdom) to confirm the `ui` shell
+  and this project's inner elements are both in place.
+- `.ak-fade` / `.ak-zoom` / `.ak-scroll` helpers in `frontend-react/src/index.css`
+  (they exist in `ui`; this project did not have them).
+
+---
+
 ## [2.8.3] - 2026-09-24
 ### Changed
 - Landing is the 3-1 page (nav, how-it-works, compare, benefits, voices, FAQ, CTA, footer). 3-1’s two hero sessions are replaced by our two-column slider. The free-tool Zawgyi→Unicode paste session is removed. First-hero **နမူနာ စမ်းကြည့်ရန်** still opens the current PDF overlay.
