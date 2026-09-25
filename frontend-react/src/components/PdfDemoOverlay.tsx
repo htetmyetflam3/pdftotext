@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { SAMPLE_ZAWGYI_DOCS, quickZawgyiToUnicode } from '../data/mockData';
 import { ToolShell } from './ToolShell';
+import GrammarArt from './art/GrammarArt';
 import confetti from 'canvas-confetti';
 
 interface PdfDemoOverlayProps {
@@ -161,11 +162,15 @@ export const PdfDemoOverlay: React.FC<PdfDemoOverlayProps> = ({ isOpen, onClose 
         </div>
       </div>
 
-      {/* Progress bar during parsing */}
+      {/* Upload / processing: the ui project's hero-02 artwork runs as the loader */}
       {parsingStep !== 'ready' && (
-        <div className="mt-4 p-8 text-center bg-sky-50/50 border border-slate-200 rounded-2xl flex flex-col items-center justify-center">
-          <RefreshCw className="w-8 h-8 text-blue-600 animate-spin mb-3" />
-          <h4 className="font-bold text-slate-900 text-sm mb-1">
+        <div className="mt-4 p-6 sm:p-8 text-center bg-sky-50/50 border border-slate-200 rounded-2xl flex flex-col items-center justify-center">
+          <div className="ak-ring shimmer relative w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <div className="p-2 sm:p-3">
+              <GrammarArt />
+            </div>
+          </div>
+          <h4 className="font-bold text-slate-900 text-sm mt-4 mb-1">
             {parsingStep === 'uploading' ? 'Uploading sample PDF document...' : 'Parsing Zawgyi glyph ligatures & re-ordering consonant stacks...'}
           </h4>
           <div className="w-64 h-2 bg-slate-200 rounded-full overflow-hidden mt-3">

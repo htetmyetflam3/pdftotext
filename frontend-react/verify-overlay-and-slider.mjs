@@ -20,7 +20,7 @@
  *   cd frontend-react
  *   NODE_PATH=/tmp/verify/node_modules node verify-overlay-and-slider.mjs
  */
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { build } from "vite";
@@ -168,9 +168,25 @@ check("app mounts", !!doc.querySelector("#heroSlider"), `root children=${doc.get
 /* ---------------- 3. slider keeps its own inner elements ---------------- */
 
 check("slider still 2 slides on one track", doc.querySelectorAll(".lp-track > .lp-slide").length === 2);
-check("slider inner art/callouts/pager untouched",
-  !!doc.querySelector("img[src*='hero-converter.png']") &&
-  !!doc.querySelector("img[src*='hero-grammar.png']") &&
+check("slide 1 art is the ui project's animated SVG (old hero-converter.png gone)",
+  !!doc.querySelector(".lp-slide .lp-screen > svg.svg-fx") &&
+  !doc.querySelector("img[src*='hero-converter.png']"),
+  `svg.svg-fx=${doc.querySelectorAll("svg.svg-fx").length}`);
+check("slide 2 art still the frontend-react PNG",
+  !!doc.querySelector("img[src*='hero-grammar.png']"));
+check("both slide arts are pinned to ui's 1200x820 canvas (windows line up)",
+  /viewBox="0 0 1200 820"/.test(doc.querySelector(".lp-slide .lp-screen > svg.svg-fx")?.outerHTML ?? "") &&
+  /aspect-ratio:1200\s*\/\s*820/.test(rule(shippedCss, "\\.lp-screen")) &&
+  /height:100%/.test(rule(shippedCss, "\\.lp-screen>svg") || rule(shippedCss, "\\.lp-screen svg")),
+  rule(shippedCss, "\\.lp-screen"));
+check("hero-grammar.png on disk is landscape now (portrait source replaced)",
+  (() => {
+    const b = readFileSync("public/images/hero-grammar.png").subarray(16, 24);
+    return b.readUInt32BE(0) > b.readUInt32BE(4);
+  })());
+check("old hero-converter.png is gone from public/images",
+  !existsSync("public/images/hero-converter.png"));
+check("slider inner callouts/pager/arrows untouched",
   doc.querySelectorAll(".lp-slide .lp-callout").length === 2 &&
   doc.querySelectorAll(".lp-pager button").length === 2 &&
   doc.querySelectorAll(".lp-arrow").length === 2);
@@ -189,6 +205,12 @@ check("PDF shell chrome: traffic dots + filename + status + close button",
   !!shell()?.querySelector("i.bg-\\[\\#c63b26\\]") &&
   /Old_Contract_Agreement_2014\.pdf/.test(shell().textContent) &&
   !!shell().querySelector('button[aria-label="Close"]'));
+check("PDF upload/parsing state shows ui's animated hero-02 art as the loader",
+  !shell()?.querySelector(".lp-slide") &&
+  !!shell()?.querySelector(".lp-screen, .ak-ring svg.svg-fx") &&
+  !shell()?.querySelector(".animate-spin") &&
+  /Completed/.test(shell()?.textContent ?? ""));
+
 check("PDF inner elements kept: presets, upload button, leak note",
   /Preset Sample PDFs:/.test(shell().textContent) &&
   /Upload Your PDF/.test(shell().textContent) &&

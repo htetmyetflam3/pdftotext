@@ -405,13 +405,26 @@ body {
   border: 1px solid rgba(247, 242, 231, 0.25);
   white-space: nowrap;
 }
-.lp-screen { position: relative; background: #0b1121; }
+/* the slide 01 art is an inline SVG with a transparent canvas (a soft light
+   gradient in ui), so the screen behind it is light; slide 02's PNG covers it. */
+.lp-screen {
+  position: relative;
+  aspect-ratio: 1200 / 820; /* the ui artwork's own canvas */
+  background: linear-gradient(135deg, #f7ece6 0%, #ffffff 55%, #f5f0e6 100%);
+}
+/* both slides' art share one box: slide 01 is ui's inline SVG (1200x820),
+   slide 02 is the PNG. A fixed box keeps the two windows exactly the same size,
+   so the slides' rows line up. */
 .lp-screen img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 11;
+  height: 100%;
   object-fit: cover;
+}
+.lp-screen > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .lp-callout {

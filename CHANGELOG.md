@@ -5,6 +5,33 @@ other branches carry their own. Entries are newest first.
 
 ---
 
+## [2.8.5] - 2026-09-25
+### Changed
+- **Hero slide 01 art is now the `ui` project's animated SVG** (`ConverterArt`,
+  ported to `frontend-react/src/components/art/`) instead of `hero-converter.png`.
+  Its blue/violet/teal palette is remapped onto this landing's paper / cinnabar /
+  gold one; the window chrome and the callout bar over it are unchanged and the
+  old PNG is deleted.
+- **Hero slide 02 keeps its own image, reframed to hero 01's canvas.** The
+  portrait `hero-grammar.png` (1200×1600) is replaced by a 4:3 landscape version
+  of the same artwork; both slides' art now sits in one fixed
+  `aspect-ratio: 1200 / 820` screen box (the `ui` artwork's canvas), so the two
+  windows are the same size and the slide rows line up. The portrait original is
+  gone.
+- **The PDF overlay's upload / parsing state runs `ui`'s hero-02 artwork as its
+  loading animation** (`GrammarArt`, same port), replacing the bare spinner; the
+  progress bar and percentage stay.
+
+### Added
+- The `fx-*` animation layer (`svg-fx`, `ak-dash` / `ak-spin` / `ak-float` /
+  `ak-line-grow` / `ak-lens` / `ak-pop` / `ak-blink` / `ak-glow` / `ak-slide-x`)
+  in `frontend-react/src/index.css` — the ported artwork animates with it, and it
+  is switched off under `prefers-reduced-motion`.
+- `frontend-react/src/components/art/GrammarArt.tsx` (slide 02 artwork, also the
+  PDF loader).
+
+---
+
 ## [2.8.4] - 2026-09-25
 ### Changed
 - **Hero slider box sizing now comes from the `ui` project** (its Hero), at every

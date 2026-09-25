@@ -28,7 +28,8 @@ browser.
 | `src/components/GrammarToolSection.tsx` | Grammar workspace (same shell): editor + dropzone, detected issues, toasts. Opens as a modal instead of replacing the hero. |
 | `src/components/Sections.tsx`, `Extras.tsx`, `Nav.tsx` | Landing sections, quick converter, sticky CTA, nav. |
 | `src/lib/pdf.ts`, `src/lib/grammar.ts`, `src/data/` | In-browser PDF sampling / Zawgyi mapping / checks, plus the sample texts and presets. |
-| `public/images/` | The hero artworks the slider shows (`hero-converter.png`, `hero-grammar.png`), not edited. |
+| `src/components/art/ConverterArt.tsx`, `GrammarArt.tsx` | The `ui` project's two animated inline-SVG artworks, palettes remapped to this landing's colours. Slide 01 uses the first; the second is the PDF overlay's loading animation. The `fx-*` classes at the end of `index.css` drive them. |
+| `public/images/hero-grammar.png` | Slide 02's artwork — the landscape reframe of the old portrait illustration. Both slides' art is pinned to a `1200 / 820` screen box so the windows match. |
 | `verify-overlay-and-slider.mjs` | Verification script for the slider box numbers and both overlay shells (needs `jsdom` on `NODE_PATH`, see the file header). |
 
 ## `ui/` — the design source

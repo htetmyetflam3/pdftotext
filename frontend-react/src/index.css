@@ -262,6 +262,77 @@ summary:focus-visible {
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
+/* ---------- hero artwork (ported from the ui project) ----------
+   The two hero arts are inline animated SVGs; these are the keyframes and
+   helper classes they animate with. */
+.svg-fx * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes ak-dash {
+  to { stroke-dashoffset: -66; }
+}
+@keyframes ak-dash-rev {
+  to { stroke-dashoffset: 66; }
+}
+@keyframes ak-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes ak-spin-rev {
+  to { transform: rotate(-360deg); }
+}
+@keyframes ak-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes ak-float-sm {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes ak-line-grow {
+  0% { transform: scaleX(0.05); opacity: 0.15; }
+  35% { transform: scaleX(1); opacity: 1; }
+  85% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(0.05); opacity: 0.15; }
+}
+@keyframes ak-lens {
+  0% { transform: translate(0, 0); }
+  35% { transform: translate(-88px, -46px); }
+  70% { transform: translate(-96px, -96px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes ak-pop {
+  0%, 70%, 100% { transform: scale(1); }
+  80% { transform: scale(1.16); }
+}
+@keyframes ak-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.08); }
+}
+@keyframes ak-glow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+@keyframes ak-slide-x {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(14px); }
+}
+
+.fx-dash { stroke-dasharray: 12 10; animation: ak-dash 1.5s linear infinite; }
+.fx-dash-rev { stroke-dasharray: 12 10; animation: ak-dash-rev 1.9s linear infinite; }
+.fx-spin { animation: ak-spin 6s linear infinite; }
+.fx-spin-fast { animation: ak-spin 2.6s linear infinite; }
+.fx-spin-rev { animation: ak-spin-rev 8s linear infinite; }
+.fx-float { animation: ak-float 5s ease-in-out infinite; }
+.fx-float-sm { animation: ak-float-sm 4s ease-in-out infinite; }
+.fx-line { transform-origin: left center; animation: ak-line-grow 3.2s ease-in-out infinite; }
+.fx-lens { animation: ak-lens 7s ease-in-out infinite; }
+.fx-pop { animation: ak-pop 3s ease-in-out infinite; }
+.fx-blink { animation: ak-blink 5.5s ease-in-out infinite; }
+.fx-glow { animation: ak-glow 2.4s ease-in-out infinite; }
+.fx-slide-x { animation: ak-slide-x 2.8s ease-in-out infinite; }
+
 /* ---------- misc ---------- */
 .scrollbar-thin::-webkit-scrollbar {
   width: 8px;
@@ -329,7 +400,20 @@ details > summary::-webkit-details-marker {
   .caret,
   .shimmer::after,
   .ak-zoom,
-  .ak-fade {
+  .ak-fade,
+  .fx-dash,
+  .fx-dash-rev,
+  .fx-spin,
+  .fx-spin-fast,
+  .fx-spin-rev,
+  .fx-float,
+  .fx-float-sm,
+  .fx-line,
+  .fx-lens,
+  .fx-pop,
+  .fx-blink,
+  .fx-glow,
+  .fx-slide-x {
     animation: none !important;
   }
   * {

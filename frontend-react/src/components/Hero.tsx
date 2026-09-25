@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ConverterArt from "./art/ConverterArt";
 
 function openPdf() {
   window.dispatchEvent(new CustomEvent("akkhara:open-pdf"));
@@ -60,7 +61,8 @@ export default function Hero() {
                       <span className="lp-chrome-pill">100% Accuracy</span>
                     </div>
                     <div className="lp-screen">
-                      <img src="/images/hero-converter.png" alt="Zawgyi PDF to Selectable Unicode Converter" />
+                      {/* slide 01 art: the ui project's animated SVG, not the old PNG */}
+                      <ConverterArt />
                       <div className="lp-callout">
                         <div className="lp-callout-left">
                           <div className="lp-callout-ico is-blue">
